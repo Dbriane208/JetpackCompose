@@ -3,6 +3,9 @@ package daniel.brian.jetpackcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,10 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import daniel.brian.jetpackcompose.ui.theme.JetpackComposeTheme
 
@@ -40,7 +45,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MyApp(modifier: Modifier = Modifier) {
         // by - helps us to avoid using .value - it is a delegate property
-        var shouldShowOnboarding by remember { mutableStateOf(true) }
+        var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
 
         Surface(modifier) {
             if (shouldShowOnboarding) {
@@ -75,8 +80,15 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Greeting(name: String) {
-        val expanded = remember { mutableStateOf(false) }
-        val extraPadding = if (expanded.value) 48.dp else 0.dp
+        var expanded by remember { mutableStateOf(false) }
+        val extraPadding by animateDpAsState(
+            if (expanded) 48.dp else 0.dp,
+            // this implements a spring animation when the show more button is clicked
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow,
+            ),
+        )
 
         Surface(
             color = MaterialTheme.colorScheme.primary,
@@ -86,13 +98,13 @@ class MainActivity : ComponentActivity() {
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(extraPadding),
+                        .padding(bottom = extraPadding.coerceAtLeast(0.dp)),
                 ) {
                     Text(text = "Hello,")
                     Text(text = name)
                 }
-                ElevatedButton(onClick = { expanded.value = !expanded.value }) {
-                    Text(if (expanded.value) "Show less" else "Show more")
+                ElevatedButton(onClick = { expanded = !expanded }) {
+                    Text(if (expanded) "Show less" else "Show more")
                 }
             }
         }
