@@ -81,6 +81,9 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun Greeting(name: String) {
         Card(
+            // colorDefaults is a utility class that provides default color values for different components
+            // sets default colors for card,button,textField etc
+            // cardColors is used set default colors for Card component
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primary,
             ),
