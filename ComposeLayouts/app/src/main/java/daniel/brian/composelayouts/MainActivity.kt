@@ -62,7 +62,7 @@ fun SearchBar(
         },
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = 56.dp),
+            .heightIn(min = 6.dp),
     )
 }
 
