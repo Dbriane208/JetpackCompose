@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -63,6 +65,14 @@ fun MyApp(
                 text = R.string.Inversions,
                 drawable = R.drawable.inversions,
             )
+            Card(
+                modifier = Modifier.padding(horizontal = 15.dp),
+            ) {
+                FavoriteCard(
+                    text = R.string.cardName,
+                    drawable = R.drawable.leaves,
+                )
+            }
         }
     }
 }
@@ -121,6 +131,50 @@ fun AlignYourBodyElement(
             stringResource(text),
             modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
             style = MaterialTheme.typography.bodyMedium,
+        )
+    }
+}
+
+@Composable
+fun FavoriteCard(
+    @StringRes text: Int,
+    @DrawableRes drawable: Int,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surfaceVariant,
+    ) {
+        Row(
+            modifier = Modifier
+                .width(255.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                painter = painterResource(drawable),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.size(80.dp),
+            )
+            Text(
+                text = stringResource(text),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = modifier.padding(16.dp),
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FavoriteCardPreview() {
+    ComposeLayoutsTheme {
+        FavoriteCard(
+            // passing hard coded data
+            text = R.string.cardName,
+            drawable = R.drawable.leaves,
+            modifier = Modifier.padding(8.dp),
         )
     }
 }
