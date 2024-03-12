@@ -39,21 +39,22 @@ class MainActivity : ComponentActivity() {
         setContent {
             IntroToComposeTheme {
                 // A surface container using the 'background' color from the theme
-                 MyApp()
+                 MyApp(modifier = Modifier)
             }
         }
     }
 }
 
 @Composable
-fun MyApp(){
+fun MyApp(modifier: Modifier = Modifier){
     // we are hoisting our create circle state to make that composable function stateless.
     // This makes the CreateCircle composable more reusable
+    // remember is used to guard against recomposition, so the state is not reset.
     var moneyCounter by remember {
         mutableIntStateOf(0)
     }
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxHeight()
             .fillMaxWidth(),
         color = Color(0xFF546E7A),
@@ -108,7 +109,6 @@ fun CreateCircle(moneyCount : Int,updateCount: (Int) -> Unit){
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
