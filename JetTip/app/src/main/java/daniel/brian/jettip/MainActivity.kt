@@ -134,6 +134,8 @@ fun MainContent(
     }
 
     Column {
+        // calling the top header
+        TopHeader(totalPerPerson = totalPerPersonState.doubleValue)
         BillForm(modifier = Modifier,
             range = range,
             totalBillState = totalBillState,
@@ -167,10 +169,6 @@ fun BillForm(
 
     // creating a tip percentage
     val tipPercentage = (sliderPositionState.value * 100).toInt()
-
-
-    // calling the top header
-    TopHeader(totalPerPerson = totalPerPersonState.value)
 
     Surface(modifier = modifier
         .padding(2.dp)
