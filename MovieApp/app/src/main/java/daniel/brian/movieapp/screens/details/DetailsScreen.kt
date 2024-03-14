@@ -72,8 +72,7 @@ fun DetailsScreen(navController: NavController, movieId: String?){
         }
     ) {
         Surface(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()) {
+            .padding(top = 80.dp)) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 // Adding the Movie Row into the details screen
                 MovieRow(movie = newMovieList.first())
