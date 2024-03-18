@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -42,9 +40,10 @@ import daniel.brian.movieapp.widgets.MovieRow
 @Composable
 fun DetailsScreen(navController: NavController, movieId: String?){
     // getting movies that match a certain id
-    val newMovieList = getMovies().filter {movie ->
+    val newMovieList = getMovies().filter { movie ->
         movie.id == movieId
     }
+
     Scaffold(modifier = Modifier,
         topBar = {
             TopAppBar(
@@ -72,8 +71,7 @@ fun DetailsScreen(navController: NavController, movieId: String?){
         }
     ) {
         Surface(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()) {
+            .padding(top = 80.dp)) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 // Adding the Movie Row into the details screen
                 MovieRow(movie = newMovieList.first())
